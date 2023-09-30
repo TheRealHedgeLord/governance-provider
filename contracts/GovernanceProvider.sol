@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 contract GovernanceProvider {
 
-    address public owner;
+    address private owner;
 
     mapping(address => bool) private activeContracts;
     mapping(address => uint256) private defaultFees;
@@ -20,6 +20,10 @@ contract GovernanceProvider {
 
     constructor() {
         owner = msg.sender;
+    }
+
+    function getOwner() public view returns(address) {
+        return owner;
     }
 
     function isActive(
@@ -86,7 +90,7 @@ contract GovernanceProvider {
     function updateFreeUserList(
         address contractAddress,
         address userAddress,
-        uint256 value
+        bool value
     ) public ownerOnly {
         freeUserList[contractAddress][userAddress] = value;
     }
